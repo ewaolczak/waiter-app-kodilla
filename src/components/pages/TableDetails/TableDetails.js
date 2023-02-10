@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { getTableById } from '../../../redux/tablesRedux';
@@ -21,23 +21,49 @@ const TableDetails = () => {
       <h1>Table {table}</h1>
       <Form>
         <Form.Group>
-          <Form.Label>
-            <strong>Status:</strong>
-          </Form.Label>
-          <Form.Select value={status}></Form.Select>
+          <Row>
+            <Col xs={1}>
+              <Form.Label>
+                <strong>Status:</strong>
+              </Form.Label>
+            </Col>
+            <Col xs={3}>
+              <Form.Select value={status}></Form.Select>
+            </Col>
+          </Row>
         </Form.Group>
         <Form.Group>
-          <Form.Label>
-            <strong>People amount:</strong>
-          </Form.Label>
-          <Form.Control value={peopleAmount}></Form.Control>/
-          <Form.Control value={maxPeopleAmount}></Form.Control>
+          <Row>
+            <Col xs={1}>
+              <Form.Label>
+                <strong>People:</strong>
+              </Form.Label>
+            </Col>
+            <Col xs={5}>
+              <Row>
+                <Col xs={2}>
+                  <Form.Control value={peopleAmount}></Form.Control>
+                </Col>
+                /
+                <Col xs={2}>
+                  <Form.Control value={maxPeopleAmount}></Form.Control>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
         </Form.Group>
         <Form.Group>
-          <Form.Label>
-            <strong>Bill:</strong>
-          </Form.Label>
-          $<Form.Control value={bill}></Form.Control>
+          <Row>
+            <Col xs={1}>
+              <Form.Label>
+                <strong>Bill:</strong>
+              </Form.Label>
+            </Col>
+            $
+            <Col xs={1}>
+              <Form.Control value={bill}></Form.Control>
+            </Col>
+          </Row>
         </Form.Group>
         <Form.Group>
           <Link to={`/table/${table.id}`}>
