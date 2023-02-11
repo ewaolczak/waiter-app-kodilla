@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Button, Row, Col } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import { /* useDispatch */ useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { getTableById } from '../../../redux/tablesRedux';
 
@@ -22,12 +22,12 @@ const TableDetails = () => {
       <Form>
         <Form.Group>
           <Row>
-            <Col xs={1}>
+            <Col>
               <Form.Label>
                 <strong>Status:</strong>
               </Form.Label>
             </Col>
-            <Col xs={3}>
+            <Col>
               <Form.Select value={status}></Form.Select>
             </Col>
           </Row>
