@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import { Form, Button, Row, Col, Card } from 'react-bootstrap';
 import { /* useDispatch */ useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { getTableById } from '../../../redux/tablesRedux';
@@ -20,48 +20,52 @@ const TableDetails = () => {
     <>
       <h1>Table {table}</h1>
       <Form>
-        <Form.Group>
+        <Form.Group className='mb-3 mt-3'>
           <Row>
-            <Col>
-              <Form.Label>
+            <Col xs={1} className='me-4 align-self-center'>
+              <Form.Label className='mt-1 align-self-center'>
                 <strong>Status:</strong>
               </Form.Label>
             </Col>
-            <Col>
+            <Col xs={4}>
               <Form.Select value={status}></Form.Select>
             </Col>
           </Row>
         </Form.Group>
-        <Form.Group>
+        <Form.Group className='mb-3'>
           <Row>
-            <Col xs={1}>
-              <Form.Label>
+            <Col xs={1} className='me-4 align-self-center'>
+              <Form.Label className='mt-1 align-self-center'>
                 <strong>People:</strong>
               </Form.Label>
             </Col>
-            <Col xs={5}>
-              <Row>
-                <Col xs={2}>
-                  <Form.Control value={peopleAmount}></Form.Control>
-                </Col>
+            <Col className='d-flex flex-row'>
+              <Col xs={1}>
+                <Form.Control value={peopleAmount}></Form.Control>
+              </Col>
+              <Card.Text as='p' className='ps-1 pe-1 align-self-center m-0'>
                 /
-                <Col xs={2}>
-                  <Form.Control value={maxPeopleAmount}></Form.Control>
-                </Col>
-              </Row>
+              </Card.Text>
+              <Col xs={1}>
+                <Form.Control value={maxPeopleAmount}></Form.Control>
+              </Col>
             </Col>
           </Row>
         </Form.Group>
-        <Form.Group>
+        <Form.Group className='mb-3'>
           <Row>
-            <Col xs={1}>
-              <Form.Label>
+            <Col xs={1} className='me-4 align-self-center'>
+              <Form.Label className='mt-1 align-self-center'>
                 <strong>Bill:</strong>
               </Form.Label>
             </Col>
-            $
-            <Col xs={1}>
-              <Form.Control value={bill}></Form.Control>
+            <Col className='d-flex flex-row'>
+              {/* <Card.Text as='p' className='pe-1 align-self-center m-0'>
+                $
+              </Card.Text> */}
+              <Col xs={2}>
+                <Form.Control value={`$ ${bill}`}></Form.Control>
+              </Col>
             </Col>
           </Row>
         </Form.Group>
