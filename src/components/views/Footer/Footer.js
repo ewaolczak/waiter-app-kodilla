@@ -4,7 +4,7 @@ import { Card } from 'react-bootstrap';
 const Footer = () => {
   return (
     <Card style={{ border: 'none' }}>
-      <Card.Body className='align-self-center'>
+      <Card.Body className='align-self-center text-muted'>
         Copyright &copy; WaiterApp 2023
       </Card.Body>
     </Card>

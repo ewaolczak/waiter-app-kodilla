@@ -5,16 +5,29 @@ import { /* useDispatch */ useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { getTableById } from '../../../redux/tablesRedux';
 
-const TableDetails = () => {
+const TableDetails = ({ action }) => {
   // const dispatch = useDispatch();
   const { id } = useParams();
   const getTable = useSelector((state) => getTableById(state, id));
 
   const [table] = useState(getTable.id);
-  const [status] = useState(getTable.status);
-  const [peopleAmount] = useState(getTable.peopleAmount);
-  const [maxPeopleAmount] = useState(getTable.maxPeopleAmount);
-  const [bill] = useState(getTable.bill);
+  const [status, setStatus] = useState(getTable.status);
+  const [peopleAmount, setpeopleAmount] = useState(getTable.peopleAmount);
+  const [maxPeopleAmount, setmaxPeopleAmount] = useState(
+    getTable.maxPeopleAmount
+  );
+  const [bill, setBill] = useState(getTable.bill);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    action({
+      id,
+      status,
+      peopleAmount,
+      maxPeopleAmount,
+      bill
+    });
+  };
 
   return (
     <>
@@ -28,7 +41,12 @@ const TableDetails = () => {
               </Form.Label>
             </Col>
             <Col xs={4}>
-              <Form.Select value={status}></Form.Select>
+              <Form.Select value={status}>
+                <option value='Free'>Free</option>
+                <option value='Reserved'>Reserved</option>
+                <option value='Busy'>Busy</option>
+                <option value='Cleaning'>Cleaning</option>
+              </Form.Select>
             </Col>
           </Row>
         </Form.Group>
