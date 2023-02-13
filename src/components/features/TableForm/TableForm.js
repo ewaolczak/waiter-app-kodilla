@@ -44,6 +44,9 @@ const TableForm = ({ action, ...props }) => {
     if (parseInt(peopleAmount) > maxPeopleAmount) {
       return setPeopleAmount(maxPeopleAmount);
     }
+    if (status === 'Cleaning' || status === 'Free') {
+      return setPeopleAmount('0');
+    }
     return setPeopleAmount(peopleAmount);
   };
 
