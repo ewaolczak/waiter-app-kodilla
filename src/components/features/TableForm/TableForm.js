@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { Button, Card, Col, Form, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getAllStatuses } from '../../../redux/statusRedux';
+import {
+  getAllStatuses,
+  updateStatusRequest
+} from '../../../redux/statusRedux';
 import { editTableRequest } from '../../../redux/tablesRedux';
 
 const TableForm = ({ action, ...props }) => {
@@ -25,10 +28,10 @@ const TableForm = ({ action, ...props }) => {
         table,
         peopleAmount,
         maxPeopleAmount,
-        status,
         bill,
         id
-      })
+      }),
+      dispatch(updateStatusRequest({ status }))
     );
     setStatus('');
     setPeopleAmount('');
@@ -37,13 +40,40 @@ const TableForm = ({ action, ...props }) => {
     navigate('/');
   };
 
-  if (parseInt(peopleAmount) < 0) setPeopleAmount('0');
-  if (parseInt(maxPeopleAmount) > 10) setMaxPeopleAmount('10');
-  if (parseInt(maxPeopleAmount) < 0) setMaxPeopleAmount('0');
-  if (parseInt(peopleAmount) > maxPeopleAmount)
-    setPeopleAmount(maxPeopleAmount);
-  if (parseInt(bill) < 0) setBill('0');
+  // if (parseInt(peopleAmount) < 0) setPeopleAmount('0');
+  // if (parseInt(maxPeopleAmount) > 10) setMaxPeopleAmount('10');
+  // if (parseInt(maxPeopleAmount) < 0) setMaxPeopleAmount('0');
+  // if (parseInt(peopleAmount) > maxPeopleAmount)
+  //   setPeopleAmount(maxPeopleAmount);
+  // if (parseInt(bill) < 0) setBill('0');
   // if (status === 'Free' || status === 'Cleaning') setPeopleAmount('0')
+
+  const handlePeopleAmount = (peopleAmount) => {
+    if (parseInt(peopleAmount) < 0) {
+      return setPeopleAmount('0');
+    }
+    if (parseInt(peopleAmount) > maxPeopleAmount) {
+      return setPeopleAmount(maxPeopleAmount);
+    }
+    return setPeopleAmount(peopleAmount);
+  };
+
+  const handleMaxPeopleAmount = (maxPeopleAmount) => {
+    if (parseInt(maxPeopleAmount) > 10) {
+      return setMaxPeopleAmount('10');
+    }
+    if (parseInt(maxPeopleAmount) < 0) {
+      return setMaxPeopleAmount('0');
+    }
+    return setMaxPeopleAmount(maxPeopleAmount);
+  };
+
+  const handleBill = (bill) => {
+    if (parseInt(bill) < 0) {
+      return setBill('0');
+    }
+    return setBill(bill);
+  };
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -83,7 +113,7 @@ const TableForm = ({ action, ...props }) => {
               <Form.Control
                 value={peopleAmount}
                 onChange={(e) =>
-                  setPeopleAmount(e.target.value)
+                  handlePeopleAmount(e.target.value)
                 }></Form.Control>
             </Col>
             <Card.Text as='p' className='ps-1 pe-1 align-self-center m-0'>
@@ -93,7 +123,7 @@ const TableForm = ({ action, ...props }) => {
               <Form.Control
                 value={maxPeopleAmount}
                 onChange={(e) =>
-                  setMaxPeopleAmount(e.target.value)
+                  handleMaxPeopleAmount(e.target.value)
                 }></Form.Control>
             </Col>
           </Col>
@@ -116,7 +146,7 @@ const TableForm = ({ action, ...props }) => {
               <Col xs={2}>
                 <Form.Control
                   value={bill}
-                  onChange={(e) => setBill(e.target.value)}></Form.Control>
+                  onChange={(e) => handleBill(e.target.value)}></Form.Control>
               </Col>
             </Col>
           </Row>
