@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 import { Button, Card, Col, Form, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import {
-  getAllStatuses,
-  updateStatusRequest
-} from '../../../redux/statusRedux';
+import { getAllStatuses } from '../../../redux/statusRedux';
 import { editTableRequest } from '../../../redux/tablesRedux';
 
 const TableForm = ({ action, ...props }) => {
@@ -28,10 +25,10 @@ const TableForm = ({ action, ...props }) => {
         table,
         peopleAmount,
         maxPeopleAmount,
+        status,
         bill,
         id
-      }),
-      dispatch(updateStatusRequest({ status }))
+      })
     );
     setStatus('');
     setPeopleAmount('');

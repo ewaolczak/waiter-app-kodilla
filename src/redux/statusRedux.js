@@ -1,5 +1,3 @@
-import { editTable } from './tablesRedux';
-
 //selectors
 export const getAllStatuses = ({ status }) => status;
 
@@ -15,21 +13,6 @@ export const fetchStatus = () => {
     fetch('http://localhost:3131/api/status')
       .then((res) => res.json())
       .then((status) => dispatch(updateStatus(status)));
-  };
-};
-
-export const updateStatusRequest = (updateStatus) => {
-  return (dispatch) => {
-    const statusOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(updateStatus)
-    };
-    fetch('http://localhost:3131/api/status', statusOptions).then(() =>
-      dispatch(editTable(updateStatus))
-    );
   };
 };
 

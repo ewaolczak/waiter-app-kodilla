@@ -29,6 +29,10 @@
       "bill": "0"
     }
   ],
-
-  "status": ["Free", "Reserved", "Busy", "Cleaning"]
+  "status": [
+    "Free",
+    "Reserved",
+    "Busy",
+    "Cleaning"
+  ]
 }

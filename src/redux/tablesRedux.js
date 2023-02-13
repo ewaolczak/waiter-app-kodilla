@@ -22,7 +22,7 @@ export const fetchTables = () => {
 export const editTableRequest = (updateTable) => {
   return (dispatch) => {
     const tableOptions = {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },

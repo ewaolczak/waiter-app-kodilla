@@ -19,7 +19,7 @@ const App = () => {
 
   useEffect(() => dispatch(fetchTables()), [dispatch]);
   useEffect(() => dispatch(fetchStatus()), [dispatch]);
-
+  
   return (
     <Container>
       <Header />
