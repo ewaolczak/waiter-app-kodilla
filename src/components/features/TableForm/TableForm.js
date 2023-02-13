@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
 import { Button, Card, Col, Form, Row } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getAllStatuses } from '../../../redux/statusRedux';
 
 const TableForm = ({ action, ...props }) => {
   const { id } = useParams();
+  const statuses = useSelector(getAllStatuses);
 
   const [table] = useState(props.id);
   const [status, setStatus] = useState(props.status);
   const [peopleAmount, setPeopleAmount] = useState(props.peopleAmount);
   const [maxPeopleAmount, setMaxPeopleAmount] = useState(props.maxPeopleAmount);
   const [bill, setBill] = useState(props.bill);
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,7 +26,16 @@ const TableForm = ({ action, ...props }) => {
       bill,
       id
     });
+    navigate('/');
   };
+
+  if (parseInt(peopleAmount) < 0) setPeopleAmount('0');
+  if (parseInt(maxPeopleAmount) > 10) setMaxPeopleAmount('10');
+  if (parseInt(maxPeopleAmount) < 0) setMaxPeopleAmount('0');
+  if (parseInt(peopleAmount) > maxPeopleAmount)
+    setPeopleAmount(maxPeopleAmount);
+  if (parseInt(bill) < 0) setBill('0');
+  // if (status === 'Free' || status === 'Cleaning') setPeopleAmount('0')
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -34,12 +48,17 @@ const TableForm = ({ action, ...props }) => {
           </Col>
           <Col xs={4}>
             <Form.Select
-              value={status}
+              type='select'
+              // value={status ? status : '1'}
               onChange={(e) => setStatus(e.target.value)}>
-              <option value='Free'>Free</option>
-              <option value='Reserved'>Reserved</option>
-              <option value='Busy'>Busy</option>
-              <option value='Cleaning'>Cleaning</option>
+              <option disabled value='1'>
+                Select status...
+              </option>
+              {statuses.map((status, index) => (
+                <option key={index} value={status}>
+                  {status}
+                </option>
+              ))}
             </Form.Select>
           </Col>
         </Row>

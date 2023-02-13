@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { editTable, getTableById } from '../../../redux/tablesRedux';
 import TableForm from '../../features/TableForm/TableForm';
 
@@ -8,12 +8,10 @@ const TableDetails = ({ action }) => {
   const { id } = useParams();
   const table = useSelector((state) => getTableById(state, id));
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleSubmit = (table) => {
     dispatch(editTable({ ...table, id }));
-    navigate('/');
   };
 
   if (!table) return <Navigate to='/' />;

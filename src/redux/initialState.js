@@ -28,7 +28,9 @@ const initialState = {
       maxPeopleAmount: 3,
       bill: 0
     }
-  ]
+  ],
+
+  status: ['Free', 'Reserved', 'Busy', 'Cleaning']
 };
 
 export default initialState;
