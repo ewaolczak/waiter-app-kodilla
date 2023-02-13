@@ -65,6 +65,16 @@ const TableForm = ({ action, ...props }) => {
     return setMaxPeopleAmount(maxPeopleAmount);
   };
 
+  const handleStatus = (e) => {
+    const {
+      target: { value }
+    } = e;
+    setStatus(value);
+    if (value === 'Busy') {
+      setBill(0);
+    }
+  };
+
   const handleBill = (bill) => {
     if (parseInt(bill) < 0) {
       return setBill('0');
@@ -82,10 +92,7 @@ const TableForm = ({ action, ...props }) => {
             </Form.Label>
           </Col>
           <Col xs={4}>
-            <Form.Select
-              type='select'
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}>
+            <Form.Select type='select' value={status} onChange={handleStatus}>
               <option disabled value='1'>
                 Select status...
               </option>
