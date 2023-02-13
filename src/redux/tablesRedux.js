@@ -2,14 +2,37 @@
 export const getAllTables = (state) => state.tables;
 export const getTableById = ({ tables }, tableId) =>
   tables.find((table) => table.id === tableId);
-export const getAllStatuses = (state) => state.status;
 
 // actions
 const createActionName = (actionName) => `app/tables/${actionName}`;
 const EDIT_TABLE = createActionName('EDIT_TABLE');
+const UPDATE_TABLE = createActionName('UPDATE_TABLE');
 
 // action creators
 export const editTable = (payload) => ({ type: EDIT_TABLE, payload });
+export const updateTable = (payload) => ({ type: UPDATE_TABLE, payload });
+export const fetchTables = () => {
+  return (dispatch) => {
+    fetch('http://localhost:3131/api/tables')
+      .then((res) => res.json())
+      .then((tables) => dispatch(updateTable(tables)));
+  };
+};
+
+export const editTableRequest = (updateTable) => {
+  return (dispatch) => {
+    const tableOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updateTable)
+    };
+    fetch('http://localhost:3131/api/tables', tableOptions).then(() =>
+      dispatch(editTable(updateTable))
+    );
+  };
+};
 
 const tablesReducer = (statePart = [], action) => {
   switch (action.type) {
@@ -17,6 +40,8 @@ const tablesReducer = (statePart = [], action) => {
       return statePart.map((table) =>
         table.id === action.payload.id ? { ...table, ...action.payload } : table
       );
+    case UPDATE_TABLE:
+      return [...action.payload];
     default:
       return statePart;
   }

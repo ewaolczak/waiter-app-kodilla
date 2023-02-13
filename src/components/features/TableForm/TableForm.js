@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Button, Card, Col, Form, Row } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getAllStatuses } from '../../../redux/statusRedux';
+import { editTableRequest } from '../../../redux/tablesRedux';
 
 const TableForm = ({ action, ...props }) => {
   const { id } = useParams();
@@ -15,17 +16,24 @@ const TableForm = ({ action, ...props }) => {
   const [bill, setBill] = useState(props.bill);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    action({
-      table,
-      peopleAmount,
-      maxPeopleAmount,
-      status,
-      bill,
-      id
-    });
+    dispatch(
+      editTableRequest({
+        table,
+        peopleAmount,
+        maxPeopleAmount,
+        status,
+        bill,
+        id
+      })
+    );
+    setStatus('');
+    setPeopleAmount('');
+    setMaxPeopleAmount('');
+    setBill('');
     navigate('/');
   };
 
@@ -49,7 +57,7 @@ const TableForm = ({ action, ...props }) => {
           <Col xs={4}>
             <Form.Select
               type='select'
-              // value={status ? status : '1'}
+              value={status}
               onChange={(e) => setStatus(e.target.value)}>
               <option disabled value='1'>
                 Select status...
@@ -91,27 +99,29 @@ const TableForm = ({ action, ...props }) => {
           </Col>
         </Row>
       </Form.Group>
-      <Form.Group className='mb-3'>
-        <Row>
-          <Col xs={1} className='me-4 align-self-center'>
-            <Form.Label className='mt-1 align-self-center'>
-              <strong>Bill:</strong>
-            </Form.Label>
-          </Col>
-          <Col className='d-flex flex-row'>
-            {
-              <Card.Text as='p' className='pe-1 align-self-center m-0'>
-                $
-              </Card.Text>
-            }
-            <Col xs={2}>
-              <Form.Control
-                value={bill}
-                onChange={(e) => setBill(e.target.value)}></Form.Control>
+      {status === 'Busy' && (
+        <Form.Group className='mb-3'>
+          <Row>
+            <Col xs={1} className='me-4 align-self-center'>
+              <Form.Label className='mt-1 align-self-center'>
+                <strong>Bill:</strong>
+              </Form.Label>
             </Col>
-          </Col>
-        </Row>
-      </Form.Group>
+            <Col className='d-flex flex-row'>
+              {
+                <Card.Text as='p' className='pe-1 align-self-center m-0'>
+                  $
+                </Card.Text>
+              }
+              <Col xs={2}>
+                <Form.Control
+                  value={bill}
+                  onChange={(e) => setBill(e.target.value)}></Form.Control>
+              </Col>
+            </Col>
+          </Row>
+        </Form.Group>
+      )}
       <Form.Group>
         <Button type='submit' variant='primary' className='text-nowrap'>
           Update
