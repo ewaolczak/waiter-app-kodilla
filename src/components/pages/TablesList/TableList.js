@@ -3,10 +3,12 @@ import { Card, Button, Row, Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getAllTables } from '../../../redux/tablesRedux';
+import Loader from '../../features/Loader/Loader';
 
 const TableList = () => {
   const tables = useSelector(getAllTables);
 
+  if (!tables.length) return <Loader></Loader>;
   return (
     <>
       <h1>All tables</h1>

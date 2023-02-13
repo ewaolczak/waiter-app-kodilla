@@ -37,14 +37,6 @@ const TableForm = ({ action, ...props }) => {
     navigate('/');
   };
 
-  // if (parseInt(peopleAmount) < 0) setPeopleAmount('0');
-  // if (parseInt(maxPeopleAmount) > 10) setMaxPeopleAmount('10');
-  // if (parseInt(maxPeopleAmount) < 0) setMaxPeopleAmount('0');
-  // if (parseInt(peopleAmount) > maxPeopleAmount)
-  //   setPeopleAmount(maxPeopleAmount);
-  // if (parseInt(bill) < 0) setBill('0');
-  // if (status === 'Free' || status === 'Cleaning') setPeopleAmount('0')
-
   const handlePeopleAmount = (peopleAmount) => {
     if (parseInt(peopleAmount) < 0) {
       return setPeopleAmount('0');
